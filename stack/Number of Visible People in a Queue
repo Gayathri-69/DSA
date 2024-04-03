@@ -1,0 +1,15 @@
+class Solution:
+    def canSeePersonsCount(self, heights: List[int]) -> List[int]:
+        stack=[]
+        res=[1]*len(heights)
+        for i in range(len(heights)-1,-1,-1):
+            c=0
+            while stack and heights[stack[-1]]<heights[i]:
+                stack.pop()
+                c+=1
+            if stack:
+                res[i]+=c
+            else:
+                res[i]=c
+            stack.append(i)
+        return res    
