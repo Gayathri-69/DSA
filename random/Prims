@@ -1,0 +1,30 @@
+##PRIMES
+import heapq
+def prims(graph,start,dest):
+    mst=[]
+    visited=set()
+    heap=[(0,start,dest)]
+    while heap:
+        weight,source,dest=heapq.heappop(heap)
+        if dest not in visited:
+            visited.add(dest)
+            mst.append((weight,source,dest))
+            for neighbor,neighbor_weight in graph[dest]:
+                if neighbor not in visited:
+                    heapq.heappush(heap,(neighbor_weight,dest,neighbor))
+    return mst
+graph={
+    'A':[('B',9),('D',7),('C',6)],
+    'B':[('A',9),('D',5),('E',10)],
+    'C':[('A',6),('E',8)],
+    'D':[('A',7),('B',5)],
+    'E':[('B',10),('C',8)]
+}
+start_vertex='A'
+m=prims(graph,start_vertex,start_vertex)
+print("MST",m)
+m_c=0
+for e in m:
+    m_c+=e[0]
+print("minimum_Spanning_Tree_cost_is:",m_c)
+# time Complexity==>O(ElogV)
